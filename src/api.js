@@ -14,6 +14,15 @@ function parseJSON(response) {
 	return response.json();
 }
 
+function checkResponseStatus(response) {
+	if(response.status === "success") {
+		return response.data;
+	} else {
+		var error = new Error(response.error)
+		throw error
+	}
+}
+
 export default class Api {
 	constructor(_endpoint = "") {
 		this.endpoint = _endpoint;
@@ -25,7 +34,23 @@ export default class Api {
 			body: JSON.stringify(_json)
 		})
 		.then(checkStatus)
-		.then(parseJSON);
+		.then(parseJSON)
+		.then(checkResponseStatus);
+	}
+
+	validate(_identifier, _token, _secret) {
+		let _json = {
+			token: _token,
+			_secret: secret
+		};
+
+		return fetch(`${_endpoint}/api/v0/keystore/${_identifier}`, {
+			method: 'VALIDATE',
+			body: JSON.stringify(_json)
+		})
+		.then(checkStatus)
+		.then(parseJSON)
+		.then(checkResponseStatus);
 	}
 
 	get(_identifier) {
@@ -33,7 +58,8 @@ export default class Api {
 			method: 'GET'
 		})
 		.then(checkStatus)
-		.then(parseJSON);
+		.then(parseJSON)
+		.then(checkResponseStatus);
 	}
 
 	put(_identifier, _json) {
@@ -42,14 +68,16 @@ export default class Api {
 			body: JSON.stringify(_json)
 		})
 		.then(checkStatus)
-		.then(parseJSON);
+		.then(parseJSON)
+		.then(checkResponseStatus);
 	}
 
-	del(_identifier) {
+	remove(_identifier) {
 		return fetch(`${_endpoint}/api/v0/keystore/${_identifier}`, {
 			method: 'DELETE'
 		})
 		.then(checkStatus)
-		.then(parseJSON);
+		.then(parseJSON)
+		.then(checkResponseStatus);
 	}
 }

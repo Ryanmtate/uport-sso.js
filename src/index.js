@@ -1,27 +1,53 @@
 // import "babel-polyfill";
-import { getToken, generateIdentity } from "./utils";
+import { getToken, generateIdentity, generateAddress } from "./utils";
 import api from "./api";
 
-export function login(_identifier, _password) {
-	return generateIdentity(_identifier, _password);
-}
+export default class uPortID {
+	constructor(_identifier = "", _password = "", _endpoint = "") {
+		this.api = new api(_endpoint);
+	}
 
-export function register(_identifier, _password) {
-	//
-}
+	login(_identifier, _password) {
+		return getToken(_identifier, _password).then(_token => {
+			return this.api.get(_identifier, _token);
+		});
+	}
 
-export function verify(_identifier, _password, _validationToken) {
-	//
-}
+	register(_identifier, _password) {
+		return generateIdentity(_identifier, _password).then(_json => {
+			return this.api.register(_identifier, _json);
+		});
+	}
 
-export function generate(_identifier, _password, _seed) {
-	//
-}
+	verify(_identifier, _password, _secret) {
+		return getToken(_identifier, _password).then(_token => {
+			return this.api.validate(_identifier, _token, _secret);
+		});
+	}
 
-export function migrate(_identifier, _password, _seed) {
-	return generate(_identifier, _password, _seed);
-}
+	generate(_identifier, _password, _seed, _entropy) {
+		return getToken(_identifier, _password).then(_token => {
+			return this.api.get(_identifier, _token);
+		})
+		.then(_json => {
+			if(_json.keystore !== null) {
+				var error = new Error("Keysore already generated");
+				throw error;
+			}
 
-export function remove(_identifier, _password) {
-	//
+			_json.keystore = generateAddress(_password, _seed, _entropy);
+
+			return this.api.put(_identifier, _json);
+		});
+	}
+
+	migrate(_identifier, _password, _seed) {
+		return this.generate(_identifier, _password, _seed, "");
+	}
+
+	remove(_identifier, _password) {
+		return getToken(_identifier, _password).then(_token => {
+			return this.api.remove(_identifier, _token);
+		});
+	}
 }
