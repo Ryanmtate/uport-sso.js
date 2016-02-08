@@ -26,7 +26,8 @@
   "homepage": "https://github.com/ConsenSys/uport-sso.js",
   "dependencies": {
     "babel-polyfill": "^6.3.14",
-    "eth-lightwallet": "^1.0.1"
+    "eth-lightwallet": "^1.0.1",
+    "whatwg-fetch": "^0.11.0"
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",
