@@ -95,7 +95,6 @@ describe('uport-sso.js', () => {
 		describe('==> Api()', () => {
 			it('should construct the API class', () => {
 				var api = new restApi({ identifier });
-				console.log(api);
 				expect(api.endpoint).to.equal(`http://localhost:5001/api/v0/keystore/${identifier}`);
 			})
 

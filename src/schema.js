@@ -1,7 +1,7 @@
 const schema = {
 	identifier: "",
 	token: "",
-	ks: null,
+	keystore: null,
 	validation: {
 		secret: "",
 		validated: false

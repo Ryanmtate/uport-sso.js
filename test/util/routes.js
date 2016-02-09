@@ -18,7 +18,7 @@ export function checkIdentityToken(req, res, next) {
 	next();
 }
 
-export function postIdentity(req, res, next) {
+export function createIdentity(req, res, next) {
 	const body = req.body;
 	const id = req.params.identifier;
 
@@ -34,7 +34,12 @@ export function postIdentity(req, res, next) {
 
 	res.send({
 		success: true,
-		body: body
+		data: {
+			id: id,
+			keystore: body.keystore,
+			token: body.token,
+			validated: false
+		}
 	});
 
 	return next();
@@ -46,21 +51,35 @@ export function getIdentity(req, res, next) {
 
 	res.send({
 		success: true,
-		body: id,
-		token: token
+		data: {
+			id: id,
+			keystore: body.keystore,
+			token: token,
+			validated: body.validated
+		}
 	});
 
 	return next();
 }
 
-export function putIdentity(req, res, next) {
+export function updateIdentity(req, res, next) {
 	const id = req.params.identifier;
 	const token = req.authorization.credentials;
+	const body = req.body;
+
+	if(id !== body.id || token !== body.token) {
+		next(new errors.ForbiddenError('authentication failed'));
+		return;
+	}
 
 	res.send({
 		success: true,
-		body: id,
-		token: token
+		data: {
+			id: id,
+			keystore: body.keystore,
+			token: token,
+			validated: body.validated
+		}
 	});
 
 	return next();
@@ -71,10 +90,17 @@ export function validateIdentity(req, res, next) {
 	const secret = req.params.secret;
 	const token = req.authorization.credentials;
 
+	//TODO: check secret hash vs validationSecret;
+	const validated = (secret == body.validationSecret);
+
 	res.send({
 		success: true,
-		body: id,
-		token: token
+		data: {
+			id: id,
+			keystore: body.keystore,
+			token: token,
+			validated
+		}
 	});
 
 	return next();
@@ -86,8 +112,12 @@ export function delIdentity(req, res, next) {
 
 	res.send({
 		success: true,
-		body: id,
-		token: token
+		data: {
+			id: id,
+			keystore: null,
+			token: null,
+			validated: false
+		}
 	});
 
 	return next();
