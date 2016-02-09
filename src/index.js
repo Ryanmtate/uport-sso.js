@@ -1,33 +1,34 @@
-// import "babel-polyfill";
 import { getToken, generateIdentity, generateAddress } from "./utils";
 import api from "./api";
 
 export default class uPortID {
-	constructor(_identifier = "", _password = "", _endpoint = "") {
-		this.api = new api(_endpoint);
+	constructor(_identifier, { apiHost = "http://localhost", apiPort = "5001", apiPath = "/api/v0/keystore/" } = {}) {
+		this._api = new api({ apiHost, apiPort, apiPath, _identifier });
+		this._identifier = _identifier;
+		this._json = null;
 	}
 
-	login(_identifier, _password) {
-		return getToken(_identifier, _password).then(_token => {
-			return this.api.get(_identifier, _token);
+	login(_password) {
+		return getToken(this._identifier, _password).then(_token => {
+			return this._api.get(_token);
 		});
 	}
 
-	register(_identifier, _password) {
-		return generateIdentity(_identifier, _password).then(_json => {
-			return this.api.register(_identifier, _json);
+	register(_password) {
+		return generateIdentity(this._identifier, _password).then(_json => {
+			return this._api.put(_json);
 		});
 	}
 
-	verify(_identifier, _password, _secret) {
-		return getToken(_identifier, _password).then(_token => {
-			return this.api.validate(_identifier, _token, _secret);
+	validate(_password, _secret) {
+		return getToken(this._identifier, _password).then(_token => {
+			return this._api.post({ token: _token, secret: _secret });
 		});
 	}
 
-	generate(_identifier, _password, _seed, _entropy) {
-		return getToken(_identifier, _password).then(_token => {
-			return this.api.get(_identifier, _token);
+	generate(_password, _seed, _entropy) {
+		return getToken(this._identifier, _password).then(_token => {
+			return this._api.get(_token);
 		})
 		.then(_json => {
 			if(_json.keystore !== null) {
@@ -35,19 +36,27 @@ export default class uPortID {
 				throw error;
 			}
 
-			_json.keystore = generateAddress(_password, _seed, _entropy);
+			return generateAddress(_password, _seed, _entropy).then(keystore => {
+				_json.keystore = keystore;
 
-			return this.api.put(_identifier, _json);
+				return _json;
+			});
+		}).then(_json => {
+			return this._api.put(_json);
 		});
 	}
 
-	migrate(_identifier, _password, _seed) {
-		return this.generate(_identifier, _password, _seed, "");
+	migrate(_password, _seed) {
+		return this.generate(_password, _seed, "");
 	}
 
-	remove(_identifier, _password) {
-		return getToken(_identifier, _password).then(_token => {
-			return this.api.remove(_identifier, _token);
+	// changePassword(_identifier, _password, _seed) {
+	// 	return this.generate(_identifier, _password, _seed, "");
+	// }
+
+	remove(_password) {
+		return getToken(this._identifier, _password).then(_token => {
+			return this._api.remove(_identifier, _token);
 		});
 	}
 }
