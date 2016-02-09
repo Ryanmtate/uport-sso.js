@@ -1,6 +1,6 @@
 import restify from 'restify';
-import errors from 'restify-errors';
-import { checkAuthentication, checkIdentityToken, createIdentity, getIdentity, updateIdentity, validateIdentity, delIdentity } from './routes';
+import { checkAuthentication, checkIdentityToken, createIdentity,
+  getIdentity, updateIdentity, validateIdentity, delIdentity } from './routes';
 
 import { apiPath, throttleOptions } from './config';
 
@@ -23,14 +23,14 @@ server.get(`${apiPath}/:identifier`, getIdentity);
 
 // Verify
 server.patch({
-	path: `${apiPath}/:identifier`,
-	contentType: 'application/json'
+  path: `${apiPath}/:identifier`,
+  contentType: 'application/json',
 }, validateIdentity);
 
 // Update
 server.post({
-	path: `${apiPath}/:identifier`,
-	contentType: 'application/json'
+  path: `${apiPath}/:identifier`,
+  contentType: 'application/json',
 }, updateIdentity);
 
 // Delete

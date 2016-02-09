@@ -1,4 +1,4 @@
-const schema = {
+const Schema = {
   identifier: '',
   token: '',
   keystore: null,
@@ -8,4 +8,4 @@ const schema = {
   },
 };
 
-export default schema;
+export default Schema;

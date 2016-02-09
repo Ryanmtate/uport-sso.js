@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 
+// FIXME: better argument handling
 function parseOptions({ method, token, payload } = {}) {
   const defaults = {
     method: method || 'POST',
@@ -51,6 +52,7 @@ function checkResponseStatus(response) {
 }
 
 export default class Api {
+  // FIXME: better argument handling
   constructor({ apiHost = 'http://localhost', apiPort = '5001', apiPath = '/api/v0/keystore/', identifier } = {}) {
     this._apiHost = apiHost;
     this._apiPort = apiPort;

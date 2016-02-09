@@ -1,6 +1,7 @@
 import { getToken, generateIdentity, generateAddress } from './utils';
 import Api from './api';
 
+// FIXME: better argument handling
 export default class uPortID {
   constructor(_identifier, { apiHost = 'http://localhost', apiPort = '5001', apiPath = '/api/v0/keystore/' } = {}) {
     this._api = new Api({ apiHost, apiPort, apiPath, _identifier });
