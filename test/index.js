@@ -1,4 +1,4 @@
-import "babel-polyfill";
+import 'babel-polyfill';
 import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import { identifier, password, seed, entropy,

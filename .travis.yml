@@ -1,8 +1,8 @@
+sudo: false
 language: node_js
-
 node_js:
-  - "4"
-  - "5"
+  - "4.1"
+  - "4.0"
 
 cache:
   directories:
@@ -17,7 +17,7 @@ addons:
 
 install:
   - export CXX="g++-4.8"
-  - npm -g install npm@latest-2
+  - npm install
 
 
 before_install:
