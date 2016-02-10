@@ -48,3 +48,9 @@ export function generateAddress(_password, _seed = '', _entropy = '') {
     }
   });
 }
+
+export const defaults = {
+  apiHost: 'http://localhost',
+  apiPort: '5001',
+  apiPath: '/api/v0/keystore/',
+};

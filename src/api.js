@@ -1,6 +1,5 @@
 import fetch from 'node-fetch';
 
-// FIXME: better argument handling
 function parseOptions({ method, token, payload } = {}) {
   const defaults = {
     method: method || 'POST',
@@ -10,17 +9,18 @@ function parseOptions({ method, token, payload } = {}) {
   };
 
   const options = Object.assign({}, defaults);
+  let _token = token;
 
-  if (typeof token !== 'undefined') {
-    options.headers = Object.assign({}, options.headers, { Authorization: `Bearer ${token}` });
-  }
-
-  if (typeof payload !== 'undefined') {
+  if (payload) {
     options.body = JSON.stringify(payload);
 
-    if (typeof token === 'undefined' && typeof payload.token !== 'undefined') {
-      options.token = payload.token;
+    if (!_token && payload.token) {
+      _token = payload.token;
     }
+  }
+
+  if (method === 'PUT') {
+    options.headers = Object.assign({}, options.headers, { Authorization: `Bearer ${_token}` });
   }
 
   // console.log(options);
@@ -32,6 +32,7 @@ function checkStatus(response) {
   if (response.status < 200 || response.status >= 300) {
     const error = new Error(response.statusText);
     error.response = response;
+
     throw error;
   }
 
@@ -45,15 +46,16 @@ function parseJSON(response) {
 function checkResponseStatus(response) {
   if (response.status !== 'success') {
     const error = new Error(response.error);
+
     throw error;
   }
 
-  return response.data;
+  return response;
 }
 
 export default class Api {
   // FIXME: better argument handling
-  constructor({ apiHost = 'http://localhost', apiPort = '5001', apiPath = '/api/v0/keystore/', identifier } = {}) {
+  constructor(identifier, { apiHost, apiPort, apiPath }) {
     this._apiHost = apiHost;
     this._apiPort = apiPort;
     this._apiPath = apiPath;
@@ -87,8 +89,8 @@ export default class Api {
     return this.fetcher('PUT', { payload });
   }
 
-  post(payload) {
-    return this.fetcher('POST', { payload });
+  post(token, payload) {
+    return this.fetcher('POST', { token, payload });
   }
 
   patch(payload) {

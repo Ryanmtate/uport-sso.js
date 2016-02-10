@@ -3,13 +3,12 @@ import chaiAsPromised from 'chai-as-promised';
 import { identifier, password, seed, entropy,
   resultToken, generatedIdentity, address } from './util/dummy';
 import { getToken, generateIdentity, generateAddress } from '../src/utils';
+import { apiHost, apiPort, apiPath } from './util/config';
 import RestApi from '../src/api';
 
 chai.use(chaiAsPromised);
 
-// import fetch from 'node-fetch';
 // import server from './util/server';
-// import { apiHost, apiPort, apiPath } from './util/config';
 
 // const apiURL = `${apiHost}:${apiPort}${apiPath}`;
 
@@ -92,13 +91,13 @@ describe('uport-sso.js', () => {
   describe('src/api.js', () => {
     describe('==> Api()', () => {
       it('should construct the API class', () => {
-        const api = new RestApi({ identifier });
+        const api = new RestApi(identifier, { apiHost, apiPort, apiPath });
         expect(api.endpoint).to.equal(`http://localhost:5001/api/v0/keystore/${identifier}`);
       });
 
       it('should register account', () => {
-        const api = new RestApi();
-        const result = api.put(identifier, { test: 'ceva' });
+        const api = new RestApi(identifier, { apiHost, apiPort, apiPath });
+        const result = api.put({ identifier, token: resultToken, keystore: null });
 
         expect(result).to.eventually.equal({});
       });

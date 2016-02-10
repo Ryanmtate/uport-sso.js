@@ -1,10 +1,10 @@
-import { getToken, generateIdentity, generateAddress } from './utils';
+import { getToken, generateIdentity, generateAddress, defaults } from './utils';
 import Api from './api';
 
 // FIXME: better argument handling
 export default class uPortID {
-  constructor(_identifier, { apiHost = 'http://localhost', apiPort = '5001', apiPath = '/api/v0/keystore/' } = {}) {
-    this._api = new Api({ apiHost, apiPort, apiPath, _identifier });
+  constructor(_identifier, { apiHost, apiPort, apiPath } = defaults) {
+    this._api = new Api(_identifier, { apiHost, apiPort, apiPath });
     this._identifier = _identifier;
     this._json = null;
   }
@@ -19,7 +19,7 @@ export default class uPortID {
       .then(_json => this._api.put(_json));
   }
 
-  validate(_password, _secret) {
+  confirm(_password, _secret) {
     return getToken(this._identifier, _password)
       .then(_token => this._api.post({ token: _token, secret: _secret }));
   }
@@ -35,19 +35,15 @@ export default class uPortID {
         return generateAddress(_password, _seed, _entropy)
           .then(keystore => Object.assign({}, _json, { keystore }));
       })
-      .then(_json => this._api.put(_json));
+      .then(_json => this._api.post(_json));
   }
 
   migrate(_password, _seed) {
     return this.generate(_password, _seed, '');
   }
 
-  // changePassword(_identifier, _password, _seed) {
-  //  return this.generate(_identifier, _password, _seed, '');
-  // }
-
   remove(_password) {
     return getToken(this._identifier, _password)
-      .then(_token => this._api.remove(this._identifier, _token));
+      .then(_token => this._api.remove(_token));
   }
 }
