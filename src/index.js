@@ -1,12 +1,20 @@
-import { getToken, generateIdentity, generateAddress, defaults } from './utils';
+import { getToken, generateIdentity, generateAddress, apiEndpoint } from './utils';
 import Api from './api';
 
 // FIXME: better argument handling
 export default class uPortID {
-  constructor(_identifier, { apiHost, apiPort, apiPath } = defaults) {
-    this._api = new Api(_identifier, { apiHost, apiPort, apiPath });
-    this._identifier = _identifier;
+  constructor(identifier, _apiEndpoint = apiEndpoint) {
+    this._api = new Api(identifier, _apiEndpoint);
+    this._identifier = identifier;
     this._json = null;
+  }
+
+  set json(value) {
+    this._json = value;
+  }
+
+  get json() {
+    return this._json;
   }
 
   login(_password) {

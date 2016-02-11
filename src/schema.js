@@ -2,10 +2,8 @@ const Schema = {
   identifier: '',
   token: '',
   keystore: null,
-  validation: {
-    secret: '',
-    validated: false,
-  },
+  secret: '',
+  validated: false,
 };
 
 export default Schema;

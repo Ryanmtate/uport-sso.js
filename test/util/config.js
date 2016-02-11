@@ -1,6 +1,4 @@
-export const apiPath = '/api/v0/keystore/';
-export const apiHost = 'http://localhost';
-export const apiPort = '5001';
+export const apiEndpoint = 'http://localhost:5001/api/v0/keystore/';
 
 export const throttleOptions = {
   burst: 10,

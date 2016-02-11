@@ -4,7 +4,7 @@ import chaiAsPromised from 'chai-as-promised';
 import { identifier, password, seed, entropy,
   resultToken, generatedIdentity, address } from './util/dummy';
 import { getToken, generateIdentity, generateAddress } from '../src/utils';
-import { apiHost, apiPort, apiPath } from './util/config';
+import { apiEndpoint } from './util/config';
 import RestApi from '../src/api';
 
 chai.use(chaiAsPromised);
@@ -91,13 +91,13 @@ describe('uport-sso.js', () => {
 
   describe('src/api.js', () => {
     describe('==> Api()', () => {
+      const api = new RestApi(identifier, apiEndpoint);
+
       it('should construct the API class', () => {
-        const api = new RestApi(identifier, { apiHost, apiPort, apiPath });
         expect(api.endpoint).to.equal(`http://localhost:5001/api/v0/keystore/${identifier}`);
       });
 
       it('should register account', () => {
-        const api = new RestApi(identifier, { apiHost, apiPort, apiPath });
         const result = api.put({ identifier, token: resultToken, keystore: null });
 
         expect(result).to.eventually.equal({});

@@ -49,8 +49,57 @@ export function generateAddress(_password, _seed = '', _entropy = '') {
   });
 }
 
-export const defaults = {
-  apiHost: 'http://localhost',
-  apiPort: '5001',
-  apiPath: '/api/v0/keystore/',
-};
+export const apiEndpoint = 'http://localhost:5001/api/v0/keystore/';
+
+export function makeRequestHeaders({ method, token, payload } = {}) {
+  const defaultOptions = {
+    method: method || 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+  };
+
+  const options = Object.assign({}, defaultOptions);
+  let _token = token;
+
+  if (payload) {
+    options.body = JSON.stringify(payload);
+
+    if (!_token && payload.token) {
+      _token = payload.token;
+    }
+  }
+
+  if (method === 'PUT') {
+    options.headers = Object.assign({}, options.headers, { Authorization: `Bearer ${_token}` });
+  }
+
+  // console.log(options);
+
+  return options;
+}
+
+export function checkResponseStatus(response) {
+  if (response.status < 200 || response.status >= 300) {
+    const error = new Error(response.statusText);
+    error.response = response;
+
+    throw error;
+  }
+
+  return response;
+}
+
+export function parseJSON(response) {
+  return response.json();
+}
+
+export function checkResponseSuccess(response) {
+  if (response.status !== 'success') {
+    const error = new Error(response.error);
+
+    throw error;
+  }
+
+  return response;
+}
