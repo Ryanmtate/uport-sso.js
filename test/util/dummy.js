@@ -13,4 +13,6 @@ export const resultToken = 'cdabfe8bce1d1ce64f025fc7099ae38d0bc8ae7e364246b11a9b
   '6e481b3e71cc9ea950829e902c4b357e55848b60063d488d9d5126e95310416d220c7b654476b59af70363fbd0469b' +
   '1609af7350dbf54e08079aa2bf846ecf0f630f96ed16acbe9a7479a6de86fbf7bca';
 export const generatedIdentity = merge(schema, { identifier, token: resultToken });
+export const secret = '6e481b3e71cc9ea950829e902c4b357e55848b60063d488d9d5126e95310416d220c7b6544' +
+  '76b59af70363fbd0469b';
 export const address = '6c16477d5b02df0d51f9b8494c0f3a59be014940';

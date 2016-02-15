@@ -34,8 +34,8 @@ export default class Api {
     return this.fetcher('PUT', { payload });
   }
 
-  post(token, payload) {
-    return this.fetcher('POST', { token, payload });
+  post(payload) {
+    return this.fetcher('POST', { payload });
   }
 
   patch(payload) {

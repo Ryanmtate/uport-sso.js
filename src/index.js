@@ -2,18 +2,9 @@ import { getToken, generateIdentity, generateAddress, apiEndpoint } from './util
 import Api from './api';
 
 export default class uPortID {
-  constructor(identifier, _apiEndpoint = apiEndpoint) {
-    this._api = new Api(identifier, _apiEndpoint);
-    this._identifier = identifier;
-    this._json = null;
-  }
-
-  set json(value) {
-    this._json = value;
-  }
-
-  get json() {
-    return this._json;
+  constructor(_identifier, _apiEndpoint = apiEndpoint) {
+    this._api = new Api(_identifier, _apiEndpoint);
+    this._identifier = _identifier;
   }
 
   login(_password) {
@@ -28,7 +19,7 @@ export default class uPortID {
 
   confirm(_password, _secret) {
     return getToken(this._identifier, _password)
-      .then(_token => this._api.post({ token: _token, secret: _secret }));
+      .then(_token => this._api.patch({ token: _token, secret: _secret }));
   }
 
   generate(_password, _seed, _entropy) {
@@ -36,7 +27,7 @@ export default class uPortID {
       .then(_token => this._api.get(_token))
       .then(_json => {
         if (_json.keystore !== null) {
-          throw new Error('Keysore already generated');
+          throw new Error('KeyStore already generated');
         }
 
         return generateAddress(_password, _seed, _entropy)

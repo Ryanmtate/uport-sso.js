@@ -1,5 +1,5 @@
 import errors from 'restify-errors';
-import { identifier, resultToken } from './dummy';
+import { identifier, resultToken, secret } from './dummy';
 
 export function checkAuthentication(req, res, next) {
   if (typeof req.params.identifier === 'undefined'
@@ -24,9 +24,7 @@ export function createIdentity(req, res, next) {
   const body = req.body;
   const id = req.params.identifier;
 
-  if (typeof id === 'undefined'
-      || typeof body.identifier === 'undefined'
-      || typeof body.token === 'undefined') {
+  if (typeof id === 'undefined' || typeof body.token === 'undefined') {
     const err = new errors.MissingParameterError({
       statusCode: 409,
       message: 'MissingParameterError',
@@ -35,14 +33,17 @@ export function createIdentity(req, res, next) {
     return next(err);
   }
 
+  const keychain = {
+    id,
+    keystore: body.keystore,
+    token: body.token,
+    secret,
+    validated: false,
+  };
+
   res.send({
     success: true,
-    data: {
-      id,
-      keystore: body.keystore,
-      token: body.token,
-      validated: false,
-    },
+    data: keychain,
   });
 
   return next();
@@ -89,12 +90,12 @@ export function updateIdentity(req, res, next) {
 
 export function validateIdentity(req, res, next) {
   const id = req.params.identifier;
-  const secret = req.params.secret;
+  const secretHash = req.params.secret;
   const token = req.authorization.credentials;
 
   // TODO: check secret hash vs validationSecret;
   // const validated = (secret === body.validationSecret);
-  const validated = secret || false;
+  const validated = (secretHash === secret);
 
   res.send({
     success: true,
