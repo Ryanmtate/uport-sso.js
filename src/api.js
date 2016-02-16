@@ -26,22 +26,27 @@ export default class Api {
     this._identifier = value;
   }
 
+  // findOne
   get(token) {
     return this.fetcher('GET', { token });
   }
 
+  // Update Keystore
   put(payload) {
     return this.fetcher('PUT', { payload });
   }
 
+  // Create
   post(payload) {
     return this.fetcher('POST', { payload });
   }
 
+  // Confirm email
   patch(payload) {
     return this.fetcher('PATCH', { payload });
   }
 
+  // Remove
   del(token) {
     return this.fetcher('DELETE', { token });
   }
