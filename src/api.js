@@ -7,8 +7,8 @@ export default class Api {
     this._identifier = identifier;
   }
 
-  fetcher(method, { token, payload }) {
-    return fetch(this.endpoint, makeRequestHeaders({ method, token, payload }))
+  fetcher(method, { path, token, payload }) {
+    return fetch(this.endpoint + (path || ''), makeRequestHeaders({ method, token, payload }))
       .then(checkResponseStatus)
       .then(parseJSON)
       .then(checkResponseSuccess);
@@ -26,28 +26,38 @@ export default class Api {
     this._identifier = value;
   }
 
-  // findOne
-  get(token) {
-    return this.fetcher('GET', { token });
-  }
-
-  // Update Keystore
-  put(payload) {
-    return this.fetcher('PUT', { payload });
-  }
-
   // Create
-  post(payload) {
+  signup(payload) {
     return this.fetcher('POST', { payload });
   }
 
-  // Confirm email
-  patch(payload) {
-    return this.fetcher('PATCH', { payload });
+  // Signin
+  signin(payload) {
+    return this.fetcher('POST', { path: `/${this._identifier}`, payload });
   }
 
-  // Remove
-  del(token) {
-    return this.fetcher('DELETE', { token });
+  // Confirm email
+  confirm(payload) {
+    return this.fetcher('PATCH', { path: `/${this._identifier}`, payload });
+  }
+
+  // Resend email
+  resend() {
+    return this.fetcher('GET', { path: `/${this._identifier}/resend` });
+  }
+
+  // Get keystore
+  get(token) {
+    return this.fetcher('GET', { path: `/${this._identifier}`, token });
+  }
+
+  // Update Keystore
+  update(token, payload) {
+    return this.fetcher('PUT', { path: `/${this._identifier}`, token, payload });
+  }
+
+  // Remove account
+  remove(token) {
+    return this.fetcher('DELETE', { path: `/${this._identifier}`, token });
   }
 }

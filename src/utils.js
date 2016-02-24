@@ -49,7 +49,7 @@ export function generateAddress(_password, _seed = '', _entropy = '') {
   });
 }
 
-export const apiEndpoint = 'http://localhost:5001/api/v0/keystore/';
+export const apiEndpoint = 'http://localhost:5001/api/v1/keystore';
 
 export function makeRequestHeaders({ method, token, payload } = {}) {
   const defaultOptions = {
@@ -60,18 +60,13 @@ export function makeRequestHeaders({ method, token, payload } = {}) {
   };
 
   const options = Object.assign({}, defaultOptions);
-  let _token = token;
 
   if (payload) {
     options.body = JSON.stringify(payload);
-
-    if (!_token && payload.token) {
-      _token = payload.token;
-    }
   }
 
-  if (method === 'PUT') {
-    options.headers = Object.assign({}, options.headers, { Authorization: `Bearer ${_token}` });
+  if (token) {
+    options.headers = Object.assign({}, options.headers, { Authorization: token });
   }
 
   // console.log(options);
