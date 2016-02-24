@@ -37,13 +37,12 @@ export default class uPortID {
         }
 
         return generateAddress(_password, _seed, _entropy)
-          .then(keystore => Object.assign({}, _json, { keystore }));
-      })
-      .then(_json => this._api.update(_json));
+          .then(keystore => this._api.update({ keystore }));
+      });
   }
 
   migrate(_token, _password, _seed) {
-    return this.generate(_password, _seed, '');
+    return this.generate(_token, _password, _seed, '');
   }
 
   remove(_token) {
