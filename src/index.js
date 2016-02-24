@@ -9,10 +9,6 @@ export default class uPortID {
     return this;
   }
 
-  login(_password) {
-    return this._api.signin({ email: this._identifier, password: _password });
-  }
-
   register(_password) {
     return this._api.signup({ email: this._identifier, password: _password });
   }
@@ -23,6 +19,10 @@ export default class uPortID {
 
   resend() {
     return this._api.resend();
+  }
+
+  login(_password) {
+    return this._api.signin({ email: this._identifier, password: _password });
   }
 
   get(_token) {
@@ -37,7 +37,7 @@ export default class uPortID {
         }
 
         return generateAddress(_password, _seed, _entropy)
-          .then(keystore => this._api.update({ keystore }));
+          .then(keystore => this._api.update(_token, { keystore }));
       });
   }
 

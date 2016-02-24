@@ -8,14 +8,14 @@ export default class Api {
   }
 
   fetcher(method, { path, token, payload }) {
-    return fetch(this.endpoint + (path || ''), makeRequestHeaders({ method, token, payload }))
+    return fetch(this._endpoint + (path || ''), makeRequestHeaders({ method, token, payload }))
       .then(checkResponseStatus)
       .then(parseJSON)
       .then(checkResponseSuccess);
   }
 
   get endpoint() {
-    return `${this._endpoint}${this._identifier}`;
+    return `${this._endpoint}/${this._identifier}`;
   }
 
   get identifier() {

@@ -94,11 +94,11 @@ describe('uport-sso.js', () => {
       const api = new RestApi(identifier, `${apiHost}${apiPath}`);
 
       it('should construct the API class', () => {
-        expect(api.endpoint).to.equal(`http://localhost:5001/api/v0/keystore/${identifier}`);
+        expect(api.endpoint).to.equal(`http://localhost:5001/api/v1/keystore/${identifier}`);
       });
 
       it('should register account', () => {
-        const result = api.put({ identifier, token: resultToken, keystore: null });
+        const result = api.signup({ password });
 
         expect(result).to.eventually.equal({});
       });
