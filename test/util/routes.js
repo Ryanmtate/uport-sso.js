@@ -7,7 +7,7 @@ export function checkAuthentication(req, res, next) {
     return next(new errors.UnauthorizedError('authentication required'));
   }
 
-  next();
+  return next();
 }
 
 export function checkIdentityToken(req, res, next) {
@@ -17,7 +17,7 @@ export function checkIdentityToken(req, res, next) {
     return next(new errors.ForbiddenError('authentication failed'));
   }
 
-  next();
+  return next();
 }
 
 export function createIdentity(req, res, next) {

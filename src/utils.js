@@ -8,6 +8,18 @@ function generateRandomSeed(_entropy) {
   return Keystore.generateRandomSeed(_entropy);
 }
 
+function deriveKey(_password) {
+  return new Promise((resolve, reject) => {
+    Keystore.deriveKeyFromPassword(_password, (err, pwDerivedKey) => {
+      if (!err) {
+        return resolve(pwDerivedKey);
+      }
+
+      return reject(err);
+    });
+  });
+}
+
 function validateTokenInput(_identifier, _password) {
   // - implement validator
   return new Promise((resolve, reject) => {
@@ -39,16 +51,13 @@ export function generateIdentity(_identifier, _password) {
 }
 
 export function generateAddress(_password, _seed = '', _entropy = '') {
-  return new Promise((resolve, reject) => {
-    try {
-      const ks = new Keystore((_seed || generateRandomSeed(_entropy)), _password);
-      ks.generateNewAddress(_password);
+  return deriveKey(_password)
+    .then(_pwDerivedKey => {
+      const ks = new Keystore((_seed || generateRandomSeed(_entropy)), _pwDerivedKey);
+      ks.generateNewAddress(_pwDerivedKey);
 
-      resolve(ks);
-    } catch (err) {
-      reject(err);
-    }
-  });
+      return ks;
+    });
 }
 
 export function makeRequestHeaders({ method, token, payload } = {}) {
