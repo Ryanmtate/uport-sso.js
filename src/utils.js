@@ -2,6 +2,8 @@ import scrypt from 'scrypt';
 import { keystore as Keystore } from 'eth-lightwallet';
 import jsonObject from './schema';
 
+export const apiEndpoint = 'http://localhost:3000/api/v1/keystore';
+
 function generateRandomSeed(_entropy) {
   return Keystore.generateRandomSeed(_entropy);
 }
@@ -49,8 +51,6 @@ export function generateAddress(_password, _seed = '', _entropy = '') {
   });
 }
 
-export const apiEndpoint = 'http://localhost:5001/api/v1/keystore';
-
 export function makeRequestHeaders({ method, token, payload } = {}) {
   const defaultOptions = {
     method: method || 'POST',
@@ -75,6 +75,8 @@ export function makeRequestHeaders({ method, token, payload } = {}) {
 }
 
 export function checkResponseStatus(response) {
+  console.log(`Response: ${response}`);
+
   if (response.status < 200 || response.status >= 300) {
     const error = new Error(response.statusText);
     error.response = response;

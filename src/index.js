@@ -1,4 +1,4 @@
-import { generateAddress, apiEndpoint } from './utils';
+import { getToken, generateAddress, apiEndpoint } from './utils';
 import Api from './api';
 
 export default class uPortID {
@@ -10,7 +10,10 @@ export default class uPortID {
   }
 
   register(_password) {
-    return this._api.signup({ email: this._identifier, password: _password });
+    const email = this._identifier;
+
+    return getToken(email, _password)
+      .then(password => this._api.signup({ email, password }));
   }
 
   confirm(_emailToken) {
@@ -22,7 +25,10 @@ export default class uPortID {
   }
 
   login(_password) {
-    return this._api.signin({ email: this._identifier, password: _password });
+    const email = this._identifier;
+
+    return getToken(email, _password)
+      .then(password => this._api.signin({ email, password }));
   }
 
   get(_token) {
