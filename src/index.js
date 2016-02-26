@@ -1,7 +1,7 @@
 import { getToken, generateAddress, apiEndpoint } from './utils';
 import Api from './api';
 
-export default class uPortSSO {
+export class uPortSSO {
   constructor({ email, token, url = apiEndpoint }) {
     this._api = new Api(email, url);
 
