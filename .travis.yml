@@ -14,6 +14,9 @@ addons:
     packages:
     - g++-4.8
 
+before_install:
+  - npm install -g grunt-cli istanbul
+
 install:
   - export CXX="g++-4.8"
   - npm install
@@ -23,5 +26,4 @@ after_install:
   - $CXX --version
 
 script:
-  - npm run lint
-  - npm test
+  - grunt test
