@@ -16,7 +16,7 @@ addons:
 
 install:
   - export CXX="g++-4.8"
-  - npm install -g grunt
+  - npm install -g gruntg
   - npm install
 
 
@@ -24,5 +24,4 @@ after_install:
   - $CXX --version
 
 script:
-  - npm run lint
-  - npm test
+  - grunt test
