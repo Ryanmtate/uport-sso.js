@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import { makeRequestHeaders, checkResponseStatus, parseJSON, checkResponseSuccess } from './utils';
 
-class Api {
+export default class Api {
   constructor(identifier, endpoint) {
     this._endpoint = endpoint;
     this._identifier = identifier;
@@ -61,5 +61,3 @@ class Api {
     return this.fetcher('DELETE', { path: `/${this._identifier}`, token });
   }
 }
-
-module.exports = Api;
