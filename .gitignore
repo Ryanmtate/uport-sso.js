@@ -37,6 +37,7 @@ es5
 
 # Module test file
 test.js
+test-es6.js
 
 # JSDocs
 docs.json

@@ -36,7 +36,7 @@ module.exports = function gruntConfig(grunt) {
       src: ['test/index.js'],
       options: {
         reporter: 'spec',
-        require: ['babel/register', 'should'],
+        require: ['babel-core/register'],
       },
     },
 
