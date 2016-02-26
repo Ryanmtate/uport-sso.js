@@ -6,4 +6,4 @@ const Schema = {
   validated: false,
 };
 
-export default Schema;
+module.exports = Schema;
