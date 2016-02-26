@@ -40,6 +40,18 @@ function deriveKey(_password) {
  *  @type          {Object}
  */
 const scrypt = {
+  /**
+   *  Create scrypt hash
+   *
+   *  @method          hash
+   *  @param           {String}           _password          String to hash
+   *  @param           {Int}              options.N          LogN
+   *  @param           {Int}              options.r          r
+   *  @param           {Int}              options.p          p
+   *  @param           {Int}              _length            Hash length in bytes
+   *  @param           {String}           _salt              Salt
+   *  @return          {Promise}          hex-encoded hash
+   */
   hash(_password, { N, r, p }, _length, _salt) {
     return new Promise((resolve, reject) => {
       scryptAsync(_password, _salt, N, r, _length, p, (hash) => {
