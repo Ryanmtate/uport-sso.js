@@ -8,13 +8,13 @@ uPort single sign-on js library provides an API for registering, storing and ret
 
 ## Installation
 ```bash
-$ npm install --save uport-sso
+$ npm install --save uport-sso.js
 ```
 
 
 ## Usage
 ```js
-import uPortSSO from 'uport-sso';
+import uPortSSO from 'uport-sso.js';
 
 const identity = new uPortSSO();
 // or

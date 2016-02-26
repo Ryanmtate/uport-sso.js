@@ -1,4 +1,5 @@
-import scrypt from 'scrypt';
+import 'setimmediate';
+import scryptAsync from 'scrypt-async';
 import { keystore as Keystore } from 'eth-lightwallet';
 import jsonObject from './schema';
 
@@ -20,6 +21,20 @@ function deriveKey(_password) {
   });
 }
 
+const scrypt = {
+  hash(_password, { N, r, p }, _length, _salt) {
+    return new Promise((resolve, reject) => {
+      scryptAsync(_password, _salt, N, r, _length, p, (hash) => {
+        if (hash) {
+          return resolve(hash);
+        }
+
+        return reject();
+      }, 'hex');
+    });
+  },
+};
+
 function validateTokenInput(_identifier, _password) {
   // - implement validator
   return new Promise((resolve, reject) => {
@@ -37,7 +52,7 @@ function validateTokenInput(_identifier, _password) {
 
 export function getToken(_identifier, _password) {
   return validateTokenInput(_identifier, _password)
-    .then(() => scrypt.hash(_password, { N: 1024, r: 1, p: 1 }, 256, _identifier))
+    .then(() => scrypt.hash(_password, { N: 11, r: 8, p: 200 }, 256, _identifier))
     .then(result => result.toString('hex'));
 }
 
@@ -84,8 +99,7 @@ export function makeRequestHeaders({ method, token, payload } = {}) {
 }
 
 export function checkResponseStatus(response) {
-  console.log(`Response: ${response}`);
-
+  console.log(`Response: ${response}`); // eslint-disable-line no-console
   if (response.status < 200 || response.status >= 300) {
     const error = new Error(response.statusText);
     error.response = response;
