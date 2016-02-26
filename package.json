@@ -30,7 +30,8 @@
     "test": "mocha --compilers js:babel-core/register",
     "test:watch": "npm run test -- --watch",
     "prebuild": "rimraf dist lib",
-    "build": "babel --presets es2015,stage-0 -d lib/ src/"
+    "build": "babel --presets es2015,stage-0 -d lib/ src/",
+    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
   },
   "dependencies": {
     "babel-plugin-transform-runtime": "^6.5.2",
@@ -61,6 +62,7 @@
     "imports-loader": "^0.6.5",
     "json-loader": "^0.5.4",
     "lodash": "^4.3.0",
+    "minami": "^1.1.1",
     "mocha": "^2.4.5",
     "restify": "^4.0.3",
     "restify-errors": "^4.0.0",
