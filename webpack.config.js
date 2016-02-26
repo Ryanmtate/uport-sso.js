@@ -10,13 +10,24 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'uport-sso.min.js',
-    libraryTarget: 'umd',
+    // libraryTarget: 'umd',
+    libraryTarget: 'commonjs',
     library: 'uPortSSO',
+  },
+  externals: {
+    scrypt: 'scrypt',
+    'eth-lightwallet': 'eth-lightwallet',
+    'node-fetch': 'fetch',
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
   },
+  target: 'web',
   plugins: [
+    new webpack.ProvidePlugin({
+      Promise: 'es6-promise',
+      'node-fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+    }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
@@ -43,7 +54,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: [nodeModulesPath],
+        exclude: /(node_modules|bower_components)/,
         include: path.join(__dirname, 'src'),
         query: {
           presets: ['es2015', 'stage-0'],
