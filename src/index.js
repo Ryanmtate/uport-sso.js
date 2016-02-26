@@ -1,10 +1,8 @@
 import { getToken, generateAddress, apiEndpoint } from './utils';
 import Api from './api';
 
-export class uPortSSO {
-  constructor({ email, token, url = apiEndpoint }) {
-    this._api = new Api(email, url);
-
+class uPortSSO {
+  constructor({ email, token, url = apiEndpoint } = {}) {
     if (email) {
       this._identifier = email;
     }
@@ -12,6 +10,8 @@ export class uPortSSO {
     if (token) {
       this._token = token;
     }
+
+    this._api = new Api(this._identifier, url);
 
     return this;
   }
@@ -79,3 +79,5 @@ export class uPortSSO {
     return this._api.remove(_token);
   }
 }
+
+module.exports = uPortSSO;
