@@ -3,26 +3,35 @@ var webpack = require('webpack');
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src/index.js'),
+  entry: {
+    app: './src/index.js',
+    vendor: ['scrypt', 'eth-lightwallet', 'node-fetch'],
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '/uport-sso.min.js',
+    filename: 'uport-sso.min.js',
     libraryTarget: 'umd',
-    library: 'uport-sso.js',
+    library: 'uPortSSO',
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(true),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compressor: {
+    //     warnings: false,
+    //   },
+    //   output: {
+    //     comments: false,
+    //   },
+    //   sourceMap: false,
+    // }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
-      },
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false,
       },
     }),
   ],
@@ -43,7 +52,6 @@ module.exports = {
       {
         test: /\.json$/,
         loader: 'json-loader',
-        exclude: [nodeModulesPath],
       },
     ],
   },

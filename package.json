@@ -12,17 +12,18 @@
     "ethereum",
     "consensys"
   ],
-  "author": "Marian Oancea <marian.oancea@gmail.com>",
+  "authors":[
+    {
+      "name": "Marian Oancea",
+      "email": "marian.oancea@consensys.net",
+      "url": "https://consensys.net"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ConsenSys/uport-sso.js/issues"
   },
   "homepage": "https://github.com/ConsenSys/uport-sso.js",
-  "files": [
-    "dist",
-    "lib",
-    "src"
-  ],
   "main": "lib/index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint src",
@@ -33,7 +34,9 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "eth-lightwallet": "^2.2.1"
+    "eth-lightwallet": "^2.2.1",
+    "node-fetch": "^1.3.3",
+    "scrypt": "^6.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",
@@ -52,11 +55,9 @@
     "json-loader": "^0.5.4",
     "lodash": "^4.3.0",
     "mocha": "^2.4.5",
-    "node-fetch": "^1.3.3",
     "restify": "^4.0.3",
     "restify-errors": "^4.0.0",
     "rimraf": "^2.5.1",
-    "scrypt": "^6.0.1",
     "webpack": "^1.12.13"
   }
 }
