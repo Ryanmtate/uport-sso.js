@@ -1,5 +1,5 @@
 {
-  "name": "uport-sso.js",
+  "name": "uport-sso-js",
   "version": "0.1.4",
   "description": "The client library for uPort SSO.",
   "repository": {

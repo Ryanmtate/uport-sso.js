@@ -5,7 +5,7 @@ var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 module.exports = {
   entry: {
     app: './src/index.js',
-    vendor: ['scrypt', 'eth-lightwallet', 'node-fetch'],
+    vendor: ['eth-lightwallet', 'node-fetch'],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -15,7 +15,6 @@ module.exports = {
     library: 'uPortSSO',
   },
   externals: {
-    scrypt: 'scrypt',
     'eth-lightwallet': 'eth-lightwallet',
     'node-fetch': 'fetch',
   },
