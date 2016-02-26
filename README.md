@@ -15,7 +15,14 @@ $ npm install --save uport-sso.js
 ## Usage
 ```js
 import uPortSSO from 'uport-sso.js';
-const identity = new uPortSSO(options);
+
+const identity = new uPortSSO();
+// or
+const identity = new uPortSSO({
+	url: `https://sso.uport.me/api/v1/keystore`,
+	email: `email@example.com`, // You can pass a default email address
+	token: `authentication_token`, // You can pass an authentication token
+});
 ```
 
 
