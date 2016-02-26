@@ -27,8 +27,7 @@
   "main": "index.js",
   "scripts": {
     "test:watch": "npm run test -- --watch",
-    "build": "grunt build",
-    "prepublish": "npm run build",
+    "prepublish": "grunt build",
     "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
   },
   "dependencies": {
