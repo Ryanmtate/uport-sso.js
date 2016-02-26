@@ -31,7 +31,7 @@
     "test:watch": "npm run test -- --watch",
     "prebuild": "rimraf dist lib",
     "build": "grunt build",
-    "prepublish": "build",
+    "prepublish": "npm run build",
     "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
   },
   "dependencies": {
