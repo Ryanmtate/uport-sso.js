@@ -1,14 +1,27 @@
 import 'setimmediate';
 import scryptAsync from 'scrypt-async';
 import { keystore as Keystore } from 'eth-lightwallet';
-import jsonObject from './schema';
 
 export const apiEndpoint = 'http://localhost:3000/api/v1/keystore';
 
+/**
+ *  Generate random 12 word seed
+ *
+ *  @method          generateRandomSeed
+ *  @param           {String}                    _entropy          Additional entropy
+ *  @return          {String}                    12 word string
+ */
 function generateRandomSeed(_entropy) {
   return Keystore.generateRandomSeed(_entropy);
 }
 
+/**
+ *  Get password derived key from password
+ *
+ *  @method          deriveKey
+ *  @param           {String}           _password          Keystore password
+ *  @return          {Promise}          pwDerivedKey
+ */
 function deriveKey(_password) {
   return new Promise((resolve, reject) => {
     Keystore.deriveKeyFromPassword(_password, (err, pwDerivedKey) => {
@@ -21,6 +34,11 @@ function deriveKey(_password) {
   });
 }
 
+/**
+ *  Scrypt async promise wrapper
+ *
+ *  @type          {Object}
+ */
 const scrypt = {
   hash(_password, { N, r, p }, _length, _salt) {
     return new Promise((resolve, reject) => {
@@ -35,6 +53,14 @@ const scrypt = {
   },
 };
 
+/**
+ *  Validate auth arguments
+ *
+ *  @method          validateTokenInput
+ *  @param           {String}                    _identifier          Account identifier
+ *  @param           {String}                    _password            Account password
+ *  @return          {Promise}                   payload
+ */
 function validateTokenInput(_identifier, _password) {
   // - implement validator
   return new Promise((resolve, reject) => {
@@ -50,21 +76,29 @@ function validateTokenInput(_identifier, _password) {
   });
 }
 
+/**
+ *  Encrypt Password before sending it to the server
+ *
+ *  @method          getToken
+ *  @param           {String}          _identifier          Account identifier
+ *  @param           {String}          _password            Account password
+ *  @return          {Promise}         hashed password
+ */
 export function getToken(_identifier, _password) {
   return validateTokenInput(_identifier, _password)
     .then(() => scrypt.hash(_password, { N: 11, r: 8, p: 200 }, 256, _identifier))
     .then(result => result.toString('hex'));
 }
 
-export function generateIdentity(_identifier, _password) {
-  return getToken(_identifier, _password)
-    .then(token => Object.assign({}, jsonObject, {
-      identifier: _identifier,
-      token,
-    })
-  );
-}
-
+/**
+ *  Generate keystore and eth address
+ *
+ *  @method          generateAddress
+ *  @param           {String}                 _password          Account password
+ *  @param           {String}                 _seed              12 word seed
+ *  @param           {String}                 _entropy           Additional entropy
+ *  @return          {Promise}                Keystore
+ */
 export function generateAddress(_password, _seed = '', _entropy = '') {
   return deriveKey(_password)
     .then(_pwDerivedKey => {
@@ -75,6 +109,15 @@ export function generateAddress(_password, _seed = '', _entropy = '') {
     });
 }
 
+/**
+ *  Prepare request headers
+ *
+ *  @method          makeRequestHeaders
+ *  @param           {String}                    options.method        GET, PUT, POST, PATCH, DELETE
+ *  @param           {String}                    options.token         JWT Auth token
+ *  @param           {Object}                    options.payload       Request payload
+ *  @return          {Object}                    Request Headers
+ */
 export function makeRequestHeaders({ method, token, payload } = {}) {
   const defaultOptions = {
     method: method || 'POST',
@@ -98,6 +141,13 @@ export function makeRequestHeaders({ method, token, payload } = {}) {
   return options;
 }
 
+/**
+ *  Check response status
+ *
+ *  @method          checkResponseStatus
+ *  @param           {Object}                     response          Response object
+ *  @return          {Object}                     response
+ */
 export function checkResponseStatus(response) {
   console.log(`Response: ${response}`); // eslint-disable-line no-console
   if (response.status < 200 || response.status >= 300) {
@@ -110,10 +160,24 @@ export function checkResponseStatus(response) {
   return response;
 }
 
+/**
+ *  Parse JSON response
+ *
+ *  @method          parseJSON
+ *  @param           {Object}           response          Response object
+ *  @return          {Object}           response
+ */
 export function parseJSON(response) {
   return response.json();
 }
 
+/**
+ *  Check is response is successful
+ *
+ *  @method          checkResponseSuccess
+ *  @param           {Object}                      response          Response object
+ *  @return          {Object}                      response
+ */
 export function checkResponseSuccess(response) {
   if (response.status !== 'success') {
     const error = new Error(response.error);
