@@ -30,7 +30,7 @@
     "test": "mocha --compilers js:babel-core/register",
     "test:watch": "npm run test -- --watch",
     "prebuild": "rimraf dist lib",
-    "build": "babel --presets es2015 -d lib/ src/",
+    "build": "babel --presets es2015,stage-0 -d lib/ src/",
     "prepublish": "npm run build"
   },
   "dependencies": {
