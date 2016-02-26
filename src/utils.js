@@ -13,10 +13,10 @@ function deriveKey(_password) {
   return new Promise((resolve, reject) => {
     Keystore.deriveKeyFromPassword(_password, (err, pwDerivedKey) => {
       if (!err) {
-        return resolve(pwDerivedKey);
+        resolve(pwDerivedKey);
+      } else {
+        reject(err);
       }
-
-      return reject(err);
     });
   });
 }

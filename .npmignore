@@ -16,3 +16,6 @@ dist
 .eslintrc
 .travis.yml
 Makefile
+
+# Module test file
+test.js
