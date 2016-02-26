@@ -31,19 +31,19 @@ export default class Api {
     return this.fetcher('POST', { payload });
   }
 
-  // Signin
-  signin(payload) {
-    return this.fetcher('POST', { path: `/${this._identifier}`, payload });
-  }
-
   // Confirm email
   confirm(payload) {
-    return this.fetcher('PATCH', { path: `/${this._identifier}`, payload });
+    return this.fetcher('PATCH', { payload });
   }
 
   // Resend email
   resend() {
-    return this.fetcher('GET', { path: `/${this._identifier}/resend` });
+    return this.fetcher('PATCH', { path: `/${this._identifier}` });
+  }
+
+  // Signin
+  signin(payload) {
+    return this.fetcher('POST', { path: `/${this._identifier}`, payload });
   }
 
   // Get keystore

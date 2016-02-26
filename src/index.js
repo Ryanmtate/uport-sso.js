@@ -2,14 +2,26 @@ import { getToken, generateAddress, apiEndpoint } from './utils';
 import Api from './api';
 
 export default class uPortID {
-  constructor(_identifier, _apiEndpoint = apiEndpoint) {
-    this._api = new Api(_identifier, _apiEndpoint);
-    this._identifier = _identifier;
+  constructor({ email, token, endpoint = apiEndpoint }) {
+    this._api = new Api(email, endpoint);
+
+    if (email) {
+      this._identifier = email;
+    }
+
+    if (token) {
+      this._token = token;
+    }
 
     return this;
   }
 
-  register(_password) {
+  register(_email, _password) {
+    if (_email && (!this._identifier || this._identifier !== _email)) {
+      this._identifier = _email;
+      this._api.identifier(_email);
+    }
+
     const email = this._identifier;
 
     return getToken(email, _password)
@@ -20,11 +32,23 @@ export default class uPortID {
     return this._api.confirm({ token: _emailToken });
   }
 
-  resend() {
-    return this._api.resend();
+  resend(_email) {
+    if (_email && (!this._identifier || this._identifier !== _email)) {
+      this._identifier = _email;
+      this._api.identifier(_email);
+    }
+
+    const email = this._identifier;
+
+    return this._api.resend(email);
   }
 
-  login(_password) {
+  login(_email, _password) {
+    if (_email && (!this._identifier || this._identifier !== _email)) {
+      this._identifier = _email;
+      this._api.identifier(_email);
+    }
+
     const email = this._identifier;
 
     return getToken(email, _password)
