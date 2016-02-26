@@ -1,10 +1,9 @@
 # uport-sso.js
 
-[![Build Status][travis-image]][travis-url]
-[![Dependency Status][david_img]][david_site]
+[![Version npm][npm-version-image]][npm-version-url][![Build Status][travis-image]][travis-url][![Dependency Status][david_img]][david_site]
+[![NPM][npm-image]][npm-url]
 
 uPort single sign-on js library provides an API for registering, storing and retrieving lightwallet backups from the keystore server.
-
 
 ## Installation
 ```bash
@@ -19,9 +18,9 @@ import uPortSSO from 'uport-sso.js';
 const identity = new uPortSSO();
 // or
 const identity = new uPortSSO({
-	url: `https://sso.uport.me/api/v1/keystore`,
-	email: `email@example.com`, // You can pass a default email address
-	token: `authentication_token`, // You can pass an authentication token
+  url: `https://sso.uport.me/api/v1/keystore`,
+  email: `email@example.com`, // You can pass a default email address
+  token: `authentication_token`, // You can pass an authentication token
 });
 ```
 
@@ -30,12 +29,12 @@ const identity = new uPortSSO({
 All methods return the response as promises.
 ```js
 identity.register(email, password)
-	.then(result => {
-		console.log(result);
-	})
-	.catch(err => {
-		console.error(error);
-	})
+  .then(result => {
+    console.log(result);
+  })
+  .catch(err => {
+    console.error(error);
+  });
 ```
 
 
@@ -48,8 +47,8 @@ identity.register(email, password);
 If successful, it will return:
 ```js
 {
-	status: `success`,
-	message: `A confirmation e-mail has been sent. Please confirm your e-mail address.`,
+  status: `success`,
+  message: `A confirmation e-mail has been sent. Please confirm your e-mail address.`,
 }
 ```
 
@@ -63,11 +62,11 @@ identity.confirm(confirmationToken);
 If successful, it will return:
 ```js
 {
-	status: `success`,
-	message: `Your account has been verified.`,
-	id: 82183151,
-	keystore: null,
-	verified: true,
+  status: `success`,
+  message: `Your account has been verified.`,
+  id: 82183151,
+  keystore: null,
+  verified: true,
 }
 ```
 
@@ -81,8 +80,8 @@ identity.resend(email);
 If successful, it will return:
 ```js
 {
-	status: `success`,
-	message: `A confirmation e-mail has been sent. Please confirm your e-mail address.`,
+  status: `success`,
+  message: `A confirmation e-mail has been sent. Please confirm your e-mail address.`,
 }
 ```
 
@@ -96,11 +95,11 @@ identity.login(email, password);
 If successful, it will return:
 ```js
 {
-	status: `success`,
-	token: `authenticationToken`,
-	id: 82183151,
-	keystore: null,
-	verified: true,
+  status: `success`,
+  token: `authenticationToken`,
+  id: 82183151,
+  keystore: null,
+  verified: true,
 }
 ```
 
@@ -114,10 +113,10 @@ identity.get(token);
 If successful, it will return:
 ```js
 {
-	status: `success`,
-	id: 82183151,
-	keystore: {},
-	verified: true,
+  status: `success`,
+  id: 82183151,
+  keystore: {},
+  verified: true,
 }
 ```
 
@@ -131,11 +130,11 @@ identity.generate(token, password, seed, entropy);
 If successful, it will return:
 ```js
 {
-	status: `success`,
-	message: `Keystore updated.`,
-	id: 82183151,
-	keystore: { object },
-	verified: true,
+  status: `success`,
+  message: `Keystore updated.`,
+  id: 82183151,
+  keystore: { object },
+  verified: true,
 }
 ```
 
@@ -149,11 +148,11 @@ identity.migrate(token, password, seed);
 If successful, it will return:
 ```js
 {
-	status: `success`,
-	message: `Keystore updated.`,
-	id: 82183151,
-	keystore: { object },
-	verified: true,
+  status: `success`,
+  message: `Keystore updated.`,
+  id: 82183151,
+  keystore: { object },
+  verified: true,
 }
 ```
 
@@ -167,12 +166,18 @@ identity.remove(token);
 If successful, it will return:
 ```js
 {
-	status: `success`,
-	message: `Account deleted.`,
+  status: `success`,
+  message: `Account deleted.`,
 }
 ```
 
-[travis-image]: https://travis-ci.org/ConsenSys/uport-sso.js.svg?branch=master
+[npm-version-image]: https://img.shields.io/npm/v/uport-sso.js.svg?style=flat-square
+[npm-version-url]: https://www.npmjs.com/package/uport-sso.js
+[travis-image]: https://img.shields.io/travis/ConsenSys/uport-sso.js.svg?branch=master&style=flat-square
 [travis-url]: https://travis-ci.org/ConsenSys/uport-sso.js
-[david_img]: https://img.shields.io/david/ConsenSys/uport-sso.js.svg
+[david_img]: https://img.shields.io/david/ConsenSys/uport-sso.js.svg?style=flat-square
 [david_site]: https://david-dm.org/ConsenSys/uport-sso.js
+[npm-image]: https://nodei.co/npm/uport-sso.js.png?downloads=true&downloadRank=true
+[npm-url]: https://nodei.co/npm/uport-sso.js/
+[inch-image]: http://inch-ci.org/github/ConsenSys/uport-sso.js.svg?branch=master&style=flat-square
+[inch-url]: http://inch-ci.org/github/ConsenSys/uport-sso.js
