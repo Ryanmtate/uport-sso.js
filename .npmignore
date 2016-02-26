@@ -19,3 +19,7 @@ Makefile
 
 # Module test file
 test.js
+
+# JSDocs
+docs.json
+jsdocs.json

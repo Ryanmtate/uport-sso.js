@@ -34,3 +34,7 @@ node_modules
 
 # Module test file
 test.js
+
+# JSDocs
+docs.json
+jsdocs.json

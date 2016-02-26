@@ -1,6 +1,11 @@
 # uport-sso.js
 
-[![Version npm][npm-version-image]][npm-version-url][![Build Status][travis-image]][travis-url][![Dependency Status][david_img]][david_site]
+[![Version npm][npm-version-image]][npm-version-url]
+[![Build Status][travis-image]][travis-url]
+[![Dependency Status][david_img]][david_site]
+[![Dev Dependency Status][dev-david_img]][dev-david_site]
+[![Documentation Status][inch-image]][inch-url]
+
 [![NPM][npm-image]][npm-url]
 
 uPort single sign-on js library provides an API for registering, storing and retrieving lightwallet backups from the keystore server.
@@ -177,6 +182,8 @@ If successful, it will return:
 [travis-url]: https://travis-ci.org/ConsenSys/uport-sso.js
 [david_img]: https://img.shields.io/david/ConsenSys/uport-sso.js.svg?style=flat-square
 [david_site]: https://david-dm.org/ConsenSys/uport-sso.js
+[dev-david_img]: https://david-dm.org/ConsenSys/uport-sso.js/dev-status.svg?style=flat-square
+[dev-david_site]: https://david-dm.org/ConsenSys/uport-sso.js#info=devDependencies
 [npm-image]: https://nodei.co/npm/uport-sso.js.png?downloads=true&downloadRank=true
 [npm-url]: https://nodei.co/npm/uport-sso.js/
 [inch-image]: http://inch-ci.org/github/ConsenSys/uport-sso.js.svg?branch=master&style=flat-square
