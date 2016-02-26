@@ -2,8 +2,8 @@ import 'babel-polyfill';
 import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import { identifier, password, seed, entropy,
-  resultToken, generatedIdentity, address } from './util/dummy';
-import { getToken, generateIdentity, generateAddress } from '../src/utils';
+  resultToken, address } from './util/dummy';
+import { getToken, generateAddress } from '../src/utils';
 import { apiHost, apiPath } from './util/config';
 import RestApi from '../src/api';
 
@@ -41,19 +41,19 @@ describe('uport-sso.js', () => {
       });
     });
 
-    describe('generateIdentity()', () => {
-      it('should throw error if identifier or password not valid', () => {
-        const result = generateIdentity('', '');
+    // describe('generateIdentity()', () => {
+    //   it('should throw error if identifier or password not valid', () => {
+    //     const result = generateIdentity('', '');
 
-        return expect(result).to.be.rejected;
-      });
+    //     return expect(result).to.be.rejected;
+    //   });
 
-      it('should generate an identity object', () => {
-        const result = generateIdentity(identifier, password);
+    //   it('should generate an identity object', () => {
+    //     const result = generateIdentity(identifier, password);
 
-        return expect(result).to.eventually.become(generatedIdentity);
-      });
-    });
+    //     return expect(result).to.eventually.become(generatedIdentity);
+    //   });
+    // });
 
     describe('generateAddress()', () => {
       it('should throw error when trying to generate address without password', () => {
