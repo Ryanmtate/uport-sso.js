@@ -1,9 +1,9 @@
 import { getToken, generateAddress, apiEndpoint } from './utils';
 import Api from './api';
 
-export default class uPortID {
-  constructor({ email, token, endpoint = apiEndpoint }) {
-    this._api = new Api(email, endpoint);
+export default class uPortSSO {
+  constructor({ email, token, url = apiEndpoint }) {
+    this._api = new Api(email, url);
 
     if (email) {
       this._identifier = email;
