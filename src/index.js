@@ -1,7 +1,19 @@
 import { getToken, generateAddress, apiEndpoint } from './utils';
 import Api from './api';
 
+/**
+ *  uPort SSO Class
+ */
 class uPortSSO {
+  /**
+   *  Constructor
+   *
+   *  @method          constructor
+   *  @param           {String}             options.email          Account email
+   *  @param           {String}             options.token          JWT Auth token
+   *  @param           {String}             options.url            API server URL
+   *  @return          {Object}             self
+   */
   constructor({ email, token, url = apiEndpoint } = {}) {
     if (email) {
       this._identifier = email;
@@ -16,6 +28,14 @@ class uPortSSO {
     return this;
   }
 
+  /**
+   *  Register account
+   *
+   *  @method          register
+   *  @param           {String}           _email             Account email
+   *  @param           {String}           _password          Account password
+   *  @return          {Promise}          HTTP Response
+   */
   register(_email, _password) {
     if (_email && (!this._identifier || this._identifier !== _email)) {
       this._identifier = _email;
@@ -28,10 +48,24 @@ class uPortSSO {
       .then(password => this._api.signup({ email, password }));
   }
 
+  /**
+   *  Confirm email address with received token
+   *
+   *  @method          confirm
+   *  @param           {String}          _emailToken          JWT confirmation token
+   *  @return          {Promise}         HTTP Response
+   */
   confirm(_emailToken) {
     return this._api.confirm({ token: _emailToken });
   }
 
+  /**
+   *  Resend confirmation email
+   *
+   *  @method          resend
+   *  @param           {String}           _email          Account email
+   *  @return          {Promise}          HTTP Response
+   */
   resend(_email) {
     if (_email && (!this._identifier || this._identifier !== _email)) {
       this._identifier = _email;
@@ -43,6 +77,14 @@ class uPortSSO {
     return this._api.resend(email);
   }
 
+  /**
+   *  Log in account to get auth token
+   *
+   *  @method          login
+   *  @param           {String}           _email             Account email
+   *  @param           {String}           _password          Account pass
+   *  @return          {Promise}          HTTP Response
+   */
   login(_email, _password) {
     if (_email && (!this._identifier || this._identifier !== _email)) {
       this._identifier = _email;
@@ -55,10 +97,27 @@ class uPortSSO {
       .then(password => this._api.signin({ email, password }));
   }
 
+  /**
+   *  Get keystore form server
+   *
+   *  @method          get
+   *  @param           {String}           _token          JWT Auth token
+   *  @return          {Promise}          HTTP Response
+   */
   get(_token) {
     return this._api.get(_token);
   }
 
+  /**
+   *  Generate keystore
+   *
+   *  @method          generate
+   *  @param           {String}          _token             JWT Auth token
+   *  @param           {String}          _password          Account password
+   *  @param           {String}          _seed              12 word seed
+   *  @param           {String}          _entropy           Additional entropy
+   *  @return          {Promise}         HTTP Response
+   */
   generate(_token, _password, _seed, _entropy) {
     return this._api.get(_token)
       .then(_json => {
@@ -71,10 +130,26 @@ class uPortSSO {
       });
   }
 
+  /**
+   *  Migrate keystore
+   *
+   *  @method          migrate
+   *  @param           {String}          _token             JWT Auth token
+   *  @param           {String}          _password          Account password
+   *  @param           {String}          _seed              12 word seed
+   *  @return          {Promise}         HTTP Response
+   */
   migrate(_token, _password, _seed) {
     return this.generate(_token, _password, _seed, '');
   }
 
+  /**
+   *  Remove account
+   *
+   *  @method          remove
+   *  @param           {String}           _token          JWT Auth token
+   *  @return          {Promise}          HTTP Response
+   */
   remove(_token) {
     return this._api.remove(_token);
   }

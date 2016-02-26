@@ -41,20 +41,6 @@ describe('uport-sso.js', () => {
       });
     });
 
-    // describe('generateIdentity()', () => {
-    //   it('should throw error if identifier or password not valid', () => {
-    //     const result = generateIdentity('', '');
-
-    //     return expect(result).to.be.rejected;
-    //   });
-
-    //   it('should generate an identity object', () => {
-    //     const result = generateIdentity(identifier, password);
-
-    //     return expect(result).to.eventually.become(generatedIdentity);
-    //   });
-    // });
-
     describe('generateAddress()', () => {
       it('should throw error when trying to generate address without password', () => {
         const result = generateAddress();
