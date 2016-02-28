@@ -39,7 +39,7 @@ class uPortSSO {
   register(_email, _password) {
     if (_email && (!this._identifier || this._identifier !== _email)) {
       this._identifier = _email;
-      this._api.identifier(_email);
+      this._api.identifier = _email;
     }
 
     const email = this._identifier;
@@ -69,7 +69,7 @@ class uPortSSO {
   resend(_email) {
     if (_email && (!this._identifier || this._identifier !== _email)) {
       this._identifier = _email;
-      this._api.identifier(_email);
+      this._api.identifier = _email;
     }
 
     const email = this._identifier;
@@ -88,7 +88,7 @@ class uPortSSO {
   login(_email, _password) {
     if (_email && (!this._identifier || this._identifier !== _email)) {
       this._identifier = _email;
-      this._api.identifier(_email);
+      this._api.identifier = _email;
     }
 
     const email = this._identifier;
