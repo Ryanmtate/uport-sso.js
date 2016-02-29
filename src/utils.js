@@ -2,7 +2,7 @@ import 'setimmediate';
 import scryptAsync from 'scrypt-async';
 import { keystore as Keystore } from 'eth-lightwallet';
 
-export const apiEndpoint = 'http://localhost:3000/api/v1/keystore';
+export const apiEndpoint = 'http://localhost/api/v1/keystore';
 
 /**
  *  Generate random 12 word seed
@@ -136,6 +136,7 @@ export function makeRequestHeaders({ method, token, payload } = {}) {
     headers: {
       'content-type': 'application/json',
     },
+    credentials: 'include',
   };
 
   const options = Object.assign({}, defaultOptions);
@@ -161,7 +162,7 @@ export function makeRequestHeaders({ method, token, payload } = {}) {
  *  @return          {Object}                     response
  */
 export function checkResponseStatus(response) {
-  console.log(`Response: ${response}`); // eslint-disable-line no-console
+  console.dir(`Response: ${response}`); // eslint-disable-line no-console
   if (response.status < 200 || response.status >= 300) {
     const error = new Error(response.statusText);
     error.response = response;
