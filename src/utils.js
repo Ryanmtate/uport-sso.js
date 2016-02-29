@@ -162,13 +162,13 @@ export function makeRequestHeaders({ method, token, payload } = {}) {
  *  @return          {Object}                     response
  */
 export function checkResponseStatus(response) {
-  console.dir(`Response: ${response}`); // eslint-disable-line no-console
-  if (response.status < 200 || response.status >= 300) {
-    const error = new Error(response.statusText);
-    error.response = response;
+  console.dir(${response}); // eslint-disable-line no-console
+  // if (response.status < 200 || response.status >= 300) {
+  //   const error = new Error(response.statusText);
+  //   error.response = response;
 
-    throw error;
-  }
+  //   throw error;
+  // }
 
   return response;
 }
