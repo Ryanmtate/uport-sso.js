@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { makeRequestHeaders, checkResponseStatus, parseJSON, checkResponseSuccess } from './utils';
+import { makeRequestHeaders, checkResponseStatus, parseJSON } from './utils';
 
 /**
  *  API Class
@@ -33,8 +33,8 @@ export default class Api {
   fetcher(method, { path, token, payload }) {
     return fetch(this._endpoint + (path || ''), makeRequestHeaders({ method, token, payload }))
       .then(checkResponseStatus)
-      .then(parseJSON)
-      .then(checkResponseSuccess);
+      .then(parseJSON);
+      // .then(checkResponseSuccess);
   }
 
   /**
