@@ -26,6 +26,7 @@ const identity = new uPortSSO({
   url: `https://sso.uport.me/api/v1/keystore`,
   email: `email@example.com`, // You can pass a default email address
   token: `authentication_token`, // You can pass an authentication token
+  confirmPath: `https://uport.me/verify/account`, // You can pass the url for the confirmation link sent via email
 });
 ```
 
