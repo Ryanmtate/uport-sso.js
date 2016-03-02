@@ -12,9 +12,10 @@ class uPortSSO {
    *  @param           {String}             options.email          Account email
    *  @param           {String}             options.token          JWT Auth token
    *  @param           {String}             options.url            API server URL
+   *  @param           {String}             options.confirmPath    Link to be sent in confirm email
    *  @return          {Object}             self
    */
-  constructor({ email, token, url = apiEndpoint } = {}) {
+  constructor({ email, token, url = apiEndpoint, confirmPath } = {}) {
     if (email) {
       this._identifier = email;
     }
@@ -23,7 +24,7 @@ class uPortSSO {
       this._token = token;
     }
 
-    this._api = new Api(this._identifier, url);
+    this._api = new Api(this._identifier, url, confirmPath);
 
     return this;
   }
