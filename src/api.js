@@ -11,11 +11,13 @@ export default class Api {
    *  @method          constructor
    *  @param           {String}             identifier          email
    *  @param           {String}             endpoint            Api server endpoint
+   *  @param           {String}             confirmEmailPath    Path to be used in confirmation link
    *  @return          {Object}             self
    */
-  constructor(identifier, endpoint) {
+  constructor(identifier, endpoint, confirmEmailPath) {
     this._endpoint = endpoint;
     this._identifier = identifier;
+    this._confirmEmailPath = confirmEmailPath;
 
     return this;
   }
@@ -31,7 +33,9 @@ export default class Api {
    *  @return          {Promise}          HTTP Response
    */
   fetcher(method, { path, token, payload }) {
-    return fetch(this._endpoint + (path || ''), makeRequestHeaders({ method, token, payload }))
+    const headers = makeRequestHeaders({ method, token, payload });
+
+    return fetch(this._endpoint + (path || ''), headers)
       .then(checkResponseStatus)
       .then(parseJSON);
       // .then(checkResponseSuccess);
@@ -76,6 +80,10 @@ export default class Api {
    *  @return          {Promise}          HTTP Response
    */
   signup(payload) {
+    if (this._confirmEmailPath) {
+      payload.confirmPath = this._confirmEmailPath;// eslint-disable-line
+    }
+
     return this.fetcher('POST', { payload });
   }
 
@@ -97,7 +105,13 @@ export default class Api {
    *  @return          {Promise}          HTTP Response
    */
   resend() {
-    return this.fetcher('PATCH', { path: `/${this._identifier}` });
+    const payload = {};
+
+    if (this._confirmEmailPath) {
+      payload.confirmPath = this._confirmEmailPath;
+    }
+
+    return this.fetcher('PATCH', { path: `/${this._identifier}`, payload });
   }
 
   /**
