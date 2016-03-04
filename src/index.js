@@ -30,6 +30,16 @@ class uPortSSO {
   }
 
   /**
+   *  Get Identifier
+   *
+   *  @method          identifier
+   *  @return          {String}            Account identifier / email
+   */
+  get identifier() {
+    return this._identifier;
+  }
+
+  /**
    *  Register account
    *
    *  @method          register
