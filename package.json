@@ -1,6 +1,6 @@
 {
   "name": "uport-sso.js",
-  "version": "0.3.22",
+  "version": "0.3.23",
   "description": "The client library for uPort SSO.",
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.5.2",
     "babel-runtime": "^6.5.0",
-    "eth-lightwallet": "^2.2.1",
+    "eth-lightwallet": "^2.2.2",
     "lodash": "^4.5.1",
     "node-fetch": "^1.3.3",
     "scrypt-async": "^1.2.0",
