@@ -127,6 +127,16 @@ If successful, it will return:
 ```
 
 
+### Generate Seed
+Generate the 12 word mnemonic seed.
+
+```js
+const seed = identity.generateSeed(entropy);
+console.log(seed)
+// myth asthma can fitness video meat wash kitten salute enable unusual dune
+```
+
+
 ### Generate keystore
 Generate a keystore.
 
