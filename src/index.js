@@ -1,4 +1,4 @@
-import { getToken, generateAddress, apiEndpoint } from './utils';
+import { getToken, generateAddress, apiEndpoint, generateRandomSeed } from './utils';
 import Api from './api';
 
 /**
@@ -117,6 +117,17 @@ class uPortSSO {
    */
   get(_token) {
     return this._api.get(_token);
+  }
+
+  /**
+   *  Generate 12 word mnemonic seed
+   *
+   *  @method          generateSeed
+   *  @param           {String}              _entropy          Extra entropy
+   *  @return          {String}              12 word seed
+   */
+  generateSeed(_entropy) {
+    return generateRandomSeed(_entropy);
   }
 
   /**

@@ -11,7 +11,7 @@ export const apiEndpoint = 'http://localhost/api/v1/keystore';
  *  @param           {String}                    _entropy          Additional entropy
  *  @return          {String}                    12 word string
  */
-function generateRandomSeed(_entropy) {
+export function generateRandomSeed(_entropy) {
   return Keystore.generateRandomSeed(_entropy);
 }
 
