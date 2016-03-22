@@ -1,4 +1,5 @@
 import { getToken, generateAddress, apiEndpoint, generateRandomSeed } from './utils';
+import entropyCollector from './entropy';
 import Api from './api';
 
 /**
@@ -124,7 +125,7 @@ class uPortSSO {
    *
    *  @method          generateSeed
    *  @param           {String}              _entropy          Extra entropy
-   *  @return          {String}              12 word seed
+   *  @return          {String}              12 word sgeed
    */
   generateSeed(_entropy) {
     return generateRandomSeed(_entropy);
@@ -174,6 +175,17 @@ class uPortSSO {
    */
   remove(_token) {
     return this._api.remove(_token);
+  }
+
+  /**
+   *  Entropy Collector class
+   *
+   *  @method          entropyCollector
+   *  @param           {Object}                  _global          window
+   *  @return          {Object}                  entropy collector class
+   */
+  entropyCollector(_global) {
+    return entropyCollector(_global);
   }
 }
 
