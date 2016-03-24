@@ -31,11 +31,11 @@ function EntropyCollector(global) {
   _timeStart = 0;
 
   if (_perfNow) {
-    now = () => 1000 * _perf.now() | 0;
+    now = () => (1000 * _perf.now() | 0);
     _timePrecision = 1;
   } else {
     _timeStart = (_perfTiming) ? _perfTiming.navigationStart : _dateNow();
-    now = () => 1000 * (_dateNow() - _timeStart) | 0;
+    now = () => (1000 * (_dateNow() - _timeStart) | 0);
     _timePrecision = 1000;
   }
 
@@ -67,7 +67,7 @@ function EntropyCollector(global) {
 
     if (_eventCounter) {
       _timeEvents[i] = max(t - _lastT, 0);
-      _coordEvents[i] = (x - _lastX << 16) | (y - _lastY & 0xffff);
+      _coordEvents[i] = ((x - _lastX << 16) | (y - _lastY & 0xffff));
     }
 
     _lastT = t;
@@ -199,7 +199,7 @@ function EntropyCollector(global) {
     const s = PI * (x * x + y * y) / 16;
     let a = atan2(y, x);
     if (a === PI) a = -PI;
-    return (floor(log(1 + s) / LN2) << 4) | (8 * (a + PI) / PI);
+    return ((floor(log(1 + s) / LN2) << 4) | (8 * (a + PI) / PI));
   }
 
   function _coordInterval(b) {
