@@ -180,13 +180,13 @@ class uPortSSO {
   /**
    *  Collect entropy
    *
-   *  @method          clollectEntropy
+   *  @method          collectEntropy
    *  @param           {Object}                 _global                   window or global object
    *  @param           {Function}               progressCallback          Called to update progress
    *  @param           {Function}               endCallback               Called when finished
    *  @return          {null}
    */
-  clollectEntropy(_global, progressCallback, endCallback) {
+  collectEntropy(_global, progressCallback, endCallback) {
     const _this = this;
     const entropy = new EntropyCollector(_global);
     const entropyLimit = 5000;
