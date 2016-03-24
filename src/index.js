@@ -1,4 +1,5 @@
 import { getToken, generateAddress, apiEndpoint, generateRandomSeed } from './utils';
+import EntropyCollector from './entropy';
 import Api from './api';
 
 /**
@@ -124,7 +125,7 @@ class uPortSSO {
    *
    *  @method          generateSeed
    *  @param           {String}              _entropy          Extra entropy
-   *  @return          {String}              12 word seed
+   *  @return          {String}              12 word sgeed
    */
   generateSeed(_entropy) {
     return generateRandomSeed(_entropy);
@@ -174,6 +175,39 @@ class uPortSSO {
    */
   remove(_token) {
     return this._api.remove(_token);
+  }
+
+  /**
+   *  Collect entropy
+   *
+   *  @method          collectEntropy
+   *  @param           {Object}                 _global                   window or global object
+   *  @param           {Function}               progressCallback          Called to update progress
+   *  @param           {Function}               endCallback               Called when finished
+   *  @return          {null}
+   */
+  collectEntropy(_global, progressCallback, endCallback) {
+    const _this = this;
+    const entropy = new EntropyCollector(_global);
+    const entropyLimit = 5000;
+    let progress = 0;
+
+    entropy.start();
+
+    this._entropyInterval = setInterval(() => {
+      if (entropy.estimatedEntropy > entropyLimit) {
+        const entropyString = String.fromCharCode(null, new Uint16Array(entropy.buffer));
+        entropy.stop();
+        endCallback(entropyString);
+        clearInterval(_this._entropyInterval);
+      } else {
+        const percentage = parseInt(entropy.estimatedEntropy / entropyLimit * 100, 10);
+        if (percentage > progress) {
+          progress = percentage;
+          progressCallback(percentage);
+        }
+      }
+    }, 1000 / 30);
   }
 }
 
