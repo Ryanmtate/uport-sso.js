@@ -2,7 +2,7 @@
   From https://github.com/vibornoff/entropy-collector.js
  */
 
-function entropyCollector(global) {
+function EntropyCollector(global) {
   const min = Math.min;
   const max = Math.max;
   const abs = Math.abs;
