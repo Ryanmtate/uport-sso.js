@@ -127,6 +127,25 @@ If successful, it will return:
 ```
 
 
+### Collect entropy
+Collect entropy on mousemove/touchmove or keyboard input.
+
+```js
+identity.collectEntropy(window, progressCallback, endCallback);
+```
+Progress callback will return the percentage of collected entropy
+```js
+function progressCallback(progress) {
+  console.log(progress); // > 58
+}
+```
+End callback will return the entropy string
+```js
+function endCallback(entropy) {
+  console.log(entropy); // > entropy string
+}
+```
+
 ### Generate Seed
 Generate the 12 word mnemonic seed.
 
