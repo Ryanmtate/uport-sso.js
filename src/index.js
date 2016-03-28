@@ -196,7 +196,7 @@ class uPortSSO {
 
     this._entropyInterval = setInterval(() => {
       if (entropy.estimatedEntropy > entropyLimit) {
-        const entropyString = String.fromCharCode(null, new Uint16Array(entropy.buffer));
+        const entropyString = String.fromCharCode.apply(null, new Uint16Array(entropy.buffer));
         console.log('buffer:', entropy.buffer);
         console.log('string:', entropyString);
         entropy.stop();
