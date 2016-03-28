@@ -354,7 +354,7 @@ function EntropyCollector(global) {
     },
 
     get buffer() {
-      return _buffer.buffer;
+      return _buffer;
     },
 
     start,
