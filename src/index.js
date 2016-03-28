@@ -184,7 +184,7 @@ class uPortSSO {
    *  @param           {Object}                 _global                   window or global object
    *  @param           {Function}               progressCallback          Called to update progress
    *  @param           {Function}               endCallback               Called when finished
-   *  @return          {null}
+   *  @return          {Null}
    */
   collectEntropy(_global, progressCallback, endCallback) {
     const _this = this;
