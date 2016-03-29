@@ -40,6 +40,16 @@ module.exports = function gruntConfig(grunt) {
       },
     },
 
+    browserify: {
+      client: {
+        src: ['src/**/*.js'],
+        dest: 'browser/uport-sso.js',
+        options: {
+          transform: [['babelify']],
+        },
+      },
+    },
+
     watch: {
       scripts: {
         files,
@@ -50,6 +60,8 @@ module.exports = function gruntConfig(grunt) {
       },
     },
   });
+
+  grunt.loadNpmTasks('grunt-browserify');
 
   grunt.registerTask('build', ['clean', 'babel']);
   grunt.registerTask('test', ['eslint', 'mochaTest', 'build']);
