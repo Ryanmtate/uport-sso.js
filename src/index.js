@@ -225,7 +225,7 @@ class uPortSSO {
           throw new Error('KeyStore has to be generated');
         }
 
-        return this._api.update(_token, { code: _code });
+        return this._api.fuel(_token, { code: _code });
       });
   }
 }
