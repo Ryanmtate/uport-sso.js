@@ -158,4 +158,16 @@ export default class Api {
   remove(token) {
     return this.fetcher('DELETE', { path: `/${this._identifier}`, token });
   }
+
+  /**
+   *  Fuel uPort account
+   *
+   *  @method          update
+   *  @param           {String}           token            JWT Auth token
+   *  @param           {Object}           payload          { code }
+   *  @return          {Promise}          HTTP Response
+   */
+  fuel(token, payload) {
+    return this.fetcher('POST', { path: `/${this._identifier}/fuel`, token, payload });
+  }
 }

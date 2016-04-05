@@ -42,10 +42,21 @@ module.exports = function gruntConfig(grunt) {
 
     browserify: {
       client: {
-        src: ['src/**/*.js'],
+        src: ['src/index.js'],
         dest: 'browser/uport-sso.js',
         options: {
-          transform: [['babelify']],
+          debug: true,
+          transform: [
+            [
+              'babelify',
+              {
+                presets: ['es2015', 'stage-0'],
+                plugins: ['transform-jscript'],
+                sourceMaps: false,
+              },
+            ],
+          ],
+          // plugin: ['babelify-external-helpers'],
         },
       },
     },
