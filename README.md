@@ -206,6 +206,21 @@ If successful, it will return:
 }
 ```
 
+
+### Fuel account
+Submit a code in order to fund the account.
+
+```js
+identity.fuel(token, code);
+```
+If successful, it will return:
+```js
+{
+  status: `success`,
+  message: `Account funded.`
+}
+```
+
 [npm-version-image]: https://img.shields.io/npm/v/uport-sso.js.svg?style=flat-square
 [npm-version-url]: https://www.npmjs.com/package/uport-sso.js
 [travis-image]: https://img.shields.io/travis/ConsenSys/uport-sso.js.svg?branch=master&style=flat-square
