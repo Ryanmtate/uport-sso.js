@@ -209,6 +209,25 @@ class uPortSSO {
       }
     }, 1000 / 30);
   }
+
+  /**
+   *  Add fuel to account
+   *
+   *  @method          generate
+   *  @param           {String}          _token             JWT Auth token
+   *  @param           {String}          _code              Fuel code
+   *  @return          {Promise}         HTTP Response
+   */
+  fuel(_token, _code) {
+    return this._api.get(_token)
+      .then(_json => {
+        if (_json.keystore === null) {
+          throw new Error('KeyStore has to be generated');
+        }
+
+        return this._api.fuel(_token, { code: _code });
+      });
+  }
 }
 
 module.exports = uPortSSO;
